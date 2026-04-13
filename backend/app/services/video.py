@@ -36,7 +36,7 @@ def compress_video(input_path: Path, output_path: Path, target_bitrate: int) -> 
     bitrate_kbps = target_bitrate // 1000
     
     result = subprocess.run(
-        ["ffmpeg", "-y", "-i", str(input_path), "-c:v", "libx264", "-b:v", f"{bitrate_kbps}k", "-b:a", "128k", str(output_path)],
+        ["ffmpeg", "-y", "-i", str(input_path), "-c:v", "h264_nvenc", "-b:v", f"{bitrate_kbps}k", "-b:a", "128k", str(output_path)],
         capture_output=True,
         text=True
     )
