@@ -12,7 +12,7 @@ upload_path = Path(__file__).resolve().parent.parent.parent / "uploads"
 async def upload_file(file: UploadFile = File(description="A mp4 video file to upload."), target_size_mb: float = Form(8.0)):
     unique_id = uuid.uuid4()
     upload_path.mkdir(exist_ok=True)
-
+    
     if file.filename:
         filename = str(unique_id) + "_" + sanitize_filename(file.filename)
     else:
