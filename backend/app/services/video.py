@@ -47,6 +47,7 @@ def compress_video(input_path: Path, output_path: Path, target_bitrate: int) -> 
     result = subprocess.run(gpu_command, capture_output=True, text=True)
     
     if result.returncode != 0:
+        print(result.stderr)
         print("Error, falling back to CPU...")
         
         cpu_command = [

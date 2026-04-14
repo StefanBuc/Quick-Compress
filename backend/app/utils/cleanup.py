@@ -6,6 +6,8 @@ def cleanup_old_files():
     now = time.time()
     cutoff = now - (60 * 60)
 
+    print("Starting cleanup of old files...")
+
     for file in uploads_dir.iterdir():
         if file.is_file() and file.stat().st_mtime < cutoff:
             try:
