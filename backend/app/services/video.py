@@ -35,14 +35,33 @@ def calculate_bitrate(file_size_mb: float, duration_sec: float) -> int:
 def compress_video(input_path: Path, output_path: Path, target_bitrate: int) -> Path:
     bitrate_kbps = target_bitrate // 1000
     
-    result = subprocess.run(
-        ["ffmpeg", "-y", "-i", str(input_path), "-c:v", "h264_nvenc", "-b:v", f"{bitrate_kbps}k", "-b:a", "128k", str(output_path)],
-        capture_output=True,
-        text=True
-    )
+    gpu_command = [
+        "ffmpeg", "-y",
+        "-i", str(input_path),
+        "-c:v", "h264_nvenc",
+        "-b:v", f"{bitrate_kbps}k",
+        "-b:a", "128k",
+        str(output_path)
+    ]
+
+    result = subprocess.run(gpu_command, capture_output=True, text=True)
     
     if result.returncode != 0:
-        raise RuntimeError(f"ffmpeg error: {result.stderr}")
+        print("Error, falling back to CPU...")
+        
+        cpu_command = [
+            "ffmpeg", "-y",
+            "-i", str(input_path),
+            "-c:v", "libx264",
+            "-b:v", f"{bitrate_kbps}k",
+            "-b:a", "128k",
+            str(output_path)
+        ]
+
+        result = subprocess.run(cpu_command, capture_output=True, text=True)
+
+        if result.returncode != 0:
+            raise RuntimeError(f"ffmpeg error: {result.stderr}")
     
     input_path.unlink()
     

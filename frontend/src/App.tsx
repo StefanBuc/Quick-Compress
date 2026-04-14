@@ -37,19 +37,22 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 place-content-center h-screen">
+    <div className="font-[Lexend_Deca] flex flex-col items-center gap-6 min-h-screen pt-30 bg-linear-to-b from-[#36454D] to-[#021930]">
       <input
         type="file"
         ref={fileInputRef}
         className="hidden"
         onChange={(e) => setFile(e.target.files?.[0] || null)}
       />
-      <h1 className="text-2xl font-bold text-center">Video Compressor</h1>
+      <img src="/logo.png" alt="Logo" className="w-32 h-32 mb-2" />
+      <h1 className="text-5xl font-semibold text-[#2E969E] tracking-wide drop-shadow-[0_0_5px_#2E969E]">
+        Quick Compress
+      </h1>
       <div
         onClick={() => fileInputRef.current?.click()}
-        className="w-100 h-50 border-2 p-5 rounded-2xl flex items-center justify-center cursor-pointer"
+        className="w-96 h-48 border-2 border-dashed border-[#376178] rounded-xl flex items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-[#36454D] transition"
       >
-        <h2 className="text-center">
+        <h2 className="text-center text-[#2E969E]">
           {file
             ? `${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`
             : "Upload"}
@@ -63,7 +66,7 @@ export default function App() {
               setTargetSize(size);
               setSelectedType("preset");
             }}
-            className={`border-2 px-3 py-1.25 rounded-lg ${selectedType === "preset" && targetSize === size ? "bg-blue-200" : ""} transition transform hover:scale-110 ${selectedType === "preset" && targetSize === size ? "" : "hover:bg-gray-100"} cursor-pointer`}
+            className={`text-[#2E969E] border-2 border-[#376178] px-3 py-1.25 rounded-lg ${selectedType === "preset" && targetSize === size ? "bg-[#021930]" : ""} transition transform hover:scale-110 ${selectedType === "preset" && targetSize === size ? "" : "hover:bg-[#36454D]"} cursor-pointer`}
           >
             {typeof size === "number" ? `${size} MB` : size}
           </button>
@@ -73,7 +76,7 @@ export default function App() {
             setTargetSize(Number(customSize));
             setSelectedType("custom");
           }}
-          className={`border-2 px-3 py-1.25 rounded-lg  ${selectedType === "custom" ? "bg-blue-200" : ""} transition transform hover:scale-110 ${selectedType === "custom" ? "" : "hover:bg-gray-100"} cursor-pointer`}
+          className={`text-[#2E969E] border-2 border-[#376178] px-3 py-1.25 rounded-lg  ${selectedType === "custom" ? "bg-[#021930]" : ""} transition transform hover:scale-110 ${selectedType === "custom" ? "" : "hover:bg-[#36454D]"} cursor-pointer`}
         >
           <div className="flex items-center gap-1">
             <input
@@ -92,8 +95,9 @@ export default function App() {
                 e.stopPropagation();
               }}
               onFocus={() => setSelectedType("custom")}
-              className="w-20 border rounded px-1"
+              className="w-22 border rounded px-1"
             />
+            <a>MB</a>
           </div>
         </button>
       </div>
@@ -105,7 +109,7 @@ export default function App() {
           }
           handleCompress();
         }}
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition transform hover:scale-110 justify-center"
+        className="bg-[#021930] text-[#2E969E] px-4 py-2 rounded-lg hover:bg-[#36454D] transition transform hover:scale-110 justify-center"
       >
         Compress
       </button>
@@ -117,7 +121,7 @@ export default function App() {
               "_blank",
             )
           }
-          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+          className="bg-[#021930] text-[#2E969E] px-4 py-2 rounded-lg hover:bg-[#36454D] transition"
         >
           Download
         </button>
