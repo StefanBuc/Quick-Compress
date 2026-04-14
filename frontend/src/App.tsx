@@ -24,7 +24,7 @@ export default function App() {
     formData.append("target_size_mb", String(targetSize));
 
     try {
-      const res = await fetch(`${apiUrl}/api/upload/uploadfile`, {
+      const res = await fetch(`${apiUrl}/api/upload/uploadfile/`, {
         method: "POST",
         body: formData,
       });
