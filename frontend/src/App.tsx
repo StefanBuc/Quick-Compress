@@ -9,6 +9,9 @@ export default function App() {
   const [selectedType, setSelectedType] = useState<"preset" | "custom">(
     "preset",
   );
+  const [status, setStatus] = useState<
+    "idle" | "processing" | "done" | "error"
+  >("idle");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const sizes = [5, 8, 10, 25, 50, 100];
   const apiUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8001";
@@ -18,6 +21,8 @@ export default function App() {
       alert("Please upload a video file first.");
       return;
     }
+
+    setStatus("processing");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -30,10 +35,12 @@ export default function App() {
       });
       const data = await res.json();
       setResult(data.compressed_filename);
+      setStatus("done");
       console.log("Compression result:", data);
     } catch (err) {
       console.error("Error compressing video:", err);
       alert("An error occurred compressing the video");
+      setStatus("error");
     }
   };
 
@@ -114,13 +121,19 @@ export default function App() {
       >
         Compress
       </button>
+      {status === "processing" && (
+        <p className="text-[#2E969E]">Processing...</p>
+      )}
+
+      {status === "done" && <p className="text-green-400">Complete</p>}
+
+      {status === "error" && (
+        <p className="text-red-400">Error occurred during compression</p>
+      )}
       {result && (
         <button
           onClick={() =>
-            window.open(
-              `${apiUrl}/api/download/file/${result}`,
-              "_blank",
-            )
+            window.open(`${apiUrl}/api/download/file/${result}`, "_blank")
           }
           className="bg-[#021930] text-[#2E969E] px-4 py-2 rounded-lg hover:bg-[#36454D] transition"
         >
