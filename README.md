@@ -52,6 +52,35 @@ Supports GPU acceleration (NVENC) with automatic CPU fallback.
 4. User downloads compressed file
 
 ---
+## Environment Variables
+
+The frontend uses environment variables to determine the backend API URL.
+
+Create a `.env` file in the `frontend` directory:
+
+```env
+VITE_API_URL=http://localhost:8001
+```
+
+---
+
+### Notes
+
+- If `VITE_API_URL` is not set, the app defaults to:
+
+```
+http://127.0.0.1:8001
+```
+
+---
+
+### Production Example
+
+When deploying, set your domain:
+
+```env
+VITE_API_URL=https://yourdomain.com
+```
 
 ## Running with Docker
 

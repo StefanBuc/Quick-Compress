@@ -11,6 +11,7 @@ export default function App() {
   );
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const sizes = [5, 8, 10, 25, 50, 100];
+  const apiUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8001";
 
   const handleCompress = async () => {
     if (!file) {
@@ -23,7 +24,7 @@ export default function App() {
     formData.append("target_size_mb", String(targetSize));
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/upload/uploadfile", {
+      const res = await fetch(`${apiUrl}/api/upload/uploadfile`, {
         method: "POST",
         body: formData,
       });
@@ -117,7 +118,7 @@ export default function App() {
         <button
           onClick={() =>
             window.open(
-              `http://127.0.0.1:8000/api/download/file/${result}`,
+              `${apiUrl}/api/download/file/${result}`,
               "_blank",
             )
           }
