@@ -1,4 +1,4 @@
-# QuickCompress
+# Quick Compress
 
 A fast, self-hosted video compression tool built with React, FastAPI, and FFmpeg.  
 Supports GPU acceleration (NVENC) with automatic CPU fallback.
